@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AUTO BOT Keys
 // @namespace    http://tampermonkey.net/
-// @version      5.3
+// @version      5.4
 // @description  INFO
 // @author       NOTHING X
 // @match        *://work.ink/*
@@ -64,9 +64,13 @@
         `;
         document.body.appendChild(copyBtn);
 
+        const deleteSaveLabels = () => {
+            document.querySelectorAll('[class*="save"]').forEach(elem => elem.remove());
+        };
+
         const showKeys = () => {
             const keys = Object.keys(localStorage)
-                .filter(k => k.startsWith("valex-exec-"))
+                .filter(k => !k.startsWith("valex"))
                 .map(k => localStorage[k]);
 
             keyUI.textContent = keys.length
@@ -93,8 +97,8 @@
             const exists = Object.values(localStorage).includes(code);
             if (!exists) {
                 let id = 1;
-                while (localStorage.getItem("valex-exec-" + id)) id++;
-                localStorage.setItem("valex-exec-" + id, code);
+                while (localStorage.getItem("key-" + id)) id++;
+                localStorage.setItem("key-" + id, code);
                 lastSaved = code;
 
                 setTimeout(() => {
@@ -111,6 +115,7 @@
                 clearInterval(interval);
                 return;
             }
+            deleteSaveLabels();
             saveCode();
         }, 100);
 
