@@ -9,23 +9,16 @@
 // @grant        none
 // ==/UserScript==
 
-// ==UserScript==
-// @name         AUTO BOT Keys
-// @namespace    http://tampermonkey.net/
-// @version      5.5
-// @description  INFO
-// @author       NOTHING X
-// @match        *://work.ink/*
-// @match        https://key.valex.io/*
-// @grant        none
-// ==/UserScript==
+
 
 (function () {
     'use strict';
     const host = location.hostname;
 
     if (host.includes("work.ink")) {
-        location.replace("https://key.valex.io/");
+setTimeout(() => {
+            location.replace("https://key.valex.io/");
+        }, 1500);
         return;
     }
 
