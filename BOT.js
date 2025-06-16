@@ -148,7 +148,7 @@
             }
             deleteSaveLabels();
             saveCode();
-        }, 200);
+        }, 10);
 
         toggleBtn.onclick = () => {
             if (keyUI.style.display === "none") {
