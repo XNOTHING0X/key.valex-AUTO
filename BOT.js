@@ -1,3 +1,4 @@
+
 // ==UserScript==
 // @name         AUTO BOT Keys
 // @namespace    http://tampermonkey.net/
@@ -15,12 +16,15 @@
     'use strict';
     const host = location.hostname;
 
-    if (host.includes("work.ink")) {
-setTimeout(() => {
-            location.replace("https://key.valex.io/");
-        }, 1500);
-        return;
-    }
+if (host.includes("work.ink")) {
+    setTimeout(() => {
+        location.replace("https://key.valex.io/");
+    }, 10);
+
+    return;
+}
+
+
 
     if (host === "key.valex.io") {
         let scanning = true;
@@ -31,11 +35,10 @@ setTimeout(() => {
         const overlay = document.createElement("div");
         overlay.style = `
             position:fixed;top:0;left:0;width:100vw;height:100vh;
-            background:#000;opacity:0.7;z-index:9999;
+            background:#000;opacity:0.35;z-index:9999;
             display:flex;justify-content:center;align-items:center;
             font-size:3em;font-weight:bold;color:#0f0;font-family:monospace;
         `;
-        overlay.textContent = "^😈^";
         document.body.appendChild(overlay);
 
         const keyUI = document.createElement("div");
