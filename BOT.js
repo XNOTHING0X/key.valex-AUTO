@@ -130,7 +130,7 @@ if (host.includes("work.ink")) {
 
                 setTimeout(() => {
                     if (scanning) location.reload();
-                }, 800);
+                }, 100);
 
                 return true;
             }
