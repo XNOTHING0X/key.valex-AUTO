@@ -9,6 +9,17 @@
 // @grant        none
 // ==/UserScript==
 
+// ==UserScript==
+// @name         AUTO BOT Keys
+// @namespace    http://tampermonkey.net/
+// @version      5.5
+// @description  INFO
+// @author       NOTHING X
+// @match        *://work.ink/*
+// @match        https://key.valex.io/*
+// @grant        none
+// ==/UserScript==
+
 (function () {
     'use strict';
     const host = location.hostname;
@@ -64,14 +75,25 @@
         `;
         document.body.appendChild(copyBtn);
 
+        const clearBtn = document.createElement("button");
+        clearBtn.textContent = "Clear All Keys";
+        clearBtn.style = `
+            position:fixed;top:110px;right:20px;z-index:99999;
+            background:#111;color:#0f0;border:1px solid #0f0;
+            padding:6px 12px;border-radius:6px;font-size:14px;
+            cursor:pointer;display:none;
+        `;
+        document.body.appendChild(clearBtn);
+
         const deleteSaveLabels = () => {
             document.querySelectorAll('[class*="save"]').forEach(elem => elem.remove());
         };
 
         const showKeys = () => {
             const keys = Object.keys(localStorage)
-                .filter(k => !k.startsWith("valex"))
-                .map(k => localStorage[k]);
+                .filter(k => k.startsWith("key-"))
+                .map(k => localStorage[k])
+                .filter(k => k.startsWith("valex"));
 
             keyUI.textContent = keys.length
                 ? `😈:\n\n${keys.map((k, i) => `${i + 1}: ${k}`).join("\n")}`
@@ -87,12 +109,21 @@
             });
         };
 
+        const clearAllKeys = () => {
+            Object.keys(localStorage)
+                .filter(k => k.startsWith("key-"))
+                .forEach(k => localStorage.removeItem(k));
+            showKeys();
+            clearBtn.textContent = "Cleared!";
+            setTimeout(() => clearBtn.textContent = "Clear All Keys", 1500);
+        };
+
         const saveCode = () => {
             const codeElem = document.querySelector("code");
             if (!codeElem || !scanning) return false;
 
             const code = codeElem.innerText.trim();
-            if (!code || code === lastSaved) return false;
+            if (!code || code === lastSaved || !code.startsWith("valex")) return false;
 
             const exists = Object.values(localStorage).includes(code);
             if (!exists) {
@@ -117,7 +148,7 @@
             }
             deleteSaveLabels();
             saveCode();
-        }, 100);
+        }, 200);
 
         toggleBtn.onclick = () => {
             if (keyUI.style.display === "none") {
@@ -125,10 +156,12 @@
                 showKeys();
                 keyUI.style.display = "block";
                 copyBtn.style.display = "inline-block";
+                clearBtn.style.display = "inline-block";
                 toggleBtn.textContent = "Hide Keys";
             } else {
                 keyUI.style.display = "none";
                 copyBtn.style.display = "none";
+                clearBtn.style.display = "none";
                 toggleBtn.textContent = "Show Keys";
                 scanning = true;
                 attempts = 0;
@@ -136,5 +169,6 @@
         };
 
         copyBtn.onclick = copyKeysToClipboard;
+        clearBtn.onclick = clearAllKeys;
     }
 })();
