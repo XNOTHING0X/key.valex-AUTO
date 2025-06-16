@@ -19,7 +19,7 @@
 if (host.includes("work.ink")) {
     setTimeout(() => {
         location.replace("https://key.valex.io/");
-    }, 10);
+    }, 1);
 
     return;
 }
@@ -28,8 +28,6 @@ if (host.includes("work.ink")) {
 
     if (host === "key.valex.io") {
         let scanning = true;
-        let attempts = 0;
-        const maxAttempts = 10;
         let lastSaved = "";
 
         const overlay = document.createElement("div");
@@ -92,13 +90,13 @@ if (host.includes("work.ink")) {
                 .filter(k => k.startsWith("valex"));
 
             keyUI.textContent = keys.length
-                ? `😈:\n\n${keys.map((k, i) => `${i + 1}: ${k}`).join("\n")}`
+                ? `Keys:\n\n${keys.map((k, i) => `${i + 1}: ${k}`).join("\n")}`
                 : "None Keys 😈";
         };
 
         const copyKeysToClipboard = () => {
             if (keyUI.style.display === "none") return;
-            const text = keyUI.textContent.replace(/^\😈.*\n\n/, '').replace(/\d+: /g, '');
+            const text = keyUI.textContent.replace(/^\Keys.*\n\n/, '').replace(/\d+: /g, '');
             navigator.clipboard.writeText(text).then(() => {
                 copyBtn.textContent = "Copied!";
                 setTimeout(() => copyBtn.textContent = "Copy All Keys", 1500);
@@ -130,21 +128,18 @@ if (host.includes("work.ink")) {
 
                 setTimeout(() => {
                     if (scanning) location.reload();
-                }, 100);
+                }, 1);
 
                 return true;
             }
             return false;
         };
 
-        const interval = setInterval(() => {
-            if (!scanning || ++attempts > maxAttempts) {
-                clearInterval(interval);
-                return;
-            }
-            deleteSaveLabels();
-            saveCode();
-        }, 10);
+setInterval(() => {
+    if (!scanning) return;
+    deleteSaveLabels();
+    saveCode();
+}, 5);
 
         toggleBtn.onclick = () => {
             if (keyUI.style.display === "none") {
@@ -160,7 +155,6 @@ if (host.includes("work.ink")) {
                 clearBtn.style.display = "none";
                 toggleBtn.textContent = "Show Keys";
                 scanning = true;
-                attempts = 0;
             }
         };
 
