@@ -186,4 +186,22 @@
 })();
 ```
 3. Enjoy the script!
-
+#keys if not want use bot
+```txt
+valex-exec-bBlp2N-irvBkD-ieSSeB-UOX6xB-IvfbCb
+valex-exec-nTvi3U-yEoszY-wXP5zM-ZZemN4-ghhZva
+valex-exec-25sesX-d2Unnj-ZlDqT9-eMeS0f-bafe7R
+valex-exec-SEDdem-vNwxll-m6QGOD-55Bl8z-0QaVCQ
+valex-exec-4DRrgT-DYVTuU-3Ckvzb-3yuDOB-3beUdb
+valex-exec-yGupfR-Wlil7p-vgvygX-yceICJ-ovsjoL
+valex-exec-aeFxFv-cqYua1-p1bqPT-CMt69v-78CBqB
+valex-exec-HFjGVq-tSR2ps-dXatpO-i0Pz52-KmhX72
+valex-exec-zgXhOn-jdPzh7-PermBv-mQvmCN-l5O9wV
+valex-exec-ERx607-fvg2rT-xgHYkT-UpVglV-mrWrCg
+valex-exec-UxRBYx-WDpgvM-AWDIkL-37HN3X-ivpG2S
+valex-exec-7LSDZ8-ihCNXr-qGLdGK-2PLHxc-tKS5UW
+valex-exec-ZTnL04-6N45I5-OuwULO-VQnB3g-eLnEXJ
+valex-exec-4ecGUv-RHBKPN-zivAhf-k9i1hM-wjMaxL
+valex-exec-ZR64bW-iWjDXM-ZfYkoy-SarDD0-lz1Hz4
+valex-exec-14AOSG-EJhE4O-WC0Jz7-BIdceM-2OYA0L
+```
