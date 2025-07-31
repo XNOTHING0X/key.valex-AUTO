@@ -185,7 +185,8 @@
     }
 })();
 ```
-3. Enjoy the script!
+3. Enjoy the script
+
 #keys if not want use bot
 ```txt
 valex-exec-bBlp2N-irvBkD-ieSSeB-UOX6xB-IvfbCb
