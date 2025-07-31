@@ -4,8 +4,7 @@
    [TempMonaky for Chrome](https://chromewebstore.google.com/detail/lcmhijbkigalmkeommnijlpobloojgfn)
 
 2. Open this link and complete the steps:  
-   [https://work.ink/3t0/swfduegj](https://work.ink/3t0/swfduegj) — done!  
-   **After that, copy the key provided on the page.**
+   [https://work.ink/3t0/swfduegj](https://work.ink/3t0/swfduegj) — done and run script BOT 
 
 
 
