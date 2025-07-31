@@ -15,7 +15,6 @@
     'use strict';
     const host = location.hostname;
 
-    // Only these exact work.ink pages redirect to key.valex.io
     if (host === "work.ink") {
         const allowedPaths = [
             "/3t0/swfduegj",
@@ -30,7 +29,6 @@
         return;
     }
 
-    // key.valex.io UI and logic
     if (host === "key.valex.io") {
         let scanning = true;
         let lastSaved = "";
