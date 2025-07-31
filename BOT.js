@@ -1,31 +1,36 @@
-
 // ==UserScript==
 // @name         AUTO BOT Keys
 // @namespace    http://tampermonkey.net/
-// @version      5.4
-// @description  INFO
+// @version      6.1
+// @description  Auto collect keys
 // @author       NOTHING X
-// @match        *://work.ink/*
-// @match        https://key.valex.io/*
+// @match        https://work.ink/3t0/swfduegj
+// @match        https://work.ink/3t0/e27ubo96
+// @match        https://work.ink/3t0/ozpr1fjz
+// @match        *://key.valex.io/*
 // @grant        none
 // ==/UserScript==
-
-
 
 (function () {
     'use strict';
     const host = location.hostname;
 
-if (host.includes("work.ink")) {
-    setTimeout(() => {
-        location.replace("https://key.valex.io/");
-    }, 1);
+    // Only these exact work.ink pages redirect to key.valex.io
+    if (host === "work.ink") {
+        const allowedPaths = [
+            "/3t0/swfduegj",
+            "/3t0/e27ubo96",
+            "/3t0/ozpr1fjz"
+        ];
+        if (allowedPaths.includes(location.pathname)) {
+            setTimeout(() => {
+                location.replace("https://key.valex.io/");
+            }, 1);
+        }
+        return;
+    }
 
-    return;
-}
-
-
-
+    // key.valex.io UI and logic
     if (host === "key.valex.io") {
         let scanning = true;
         let lastSaved = "";
@@ -33,49 +38,54 @@ if (host.includes("work.ink")) {
         const overlay = document.createElement("div");
         overlay.style = `
             position:fixed;top:0;left:0;width:100vw;height:100vh;
-            background:#000;opacity:0.35;z-index:9999;
+            background:#000;opacity:0.3;z-index:9999;
             display:flex;justify-content:center;align-items:center;
             font-size:3em;font-weight:bold;color:#0f0;font-family:monospace;
+            transition: all 0.3s ease-in-out;
         `;
         document.body.appendChild(overlay);
 
         const keyUI = document.createElement("div");
         keyUI.style = `
-            position:fixed;top:70px;left:20px;z-index:99999;
-            background:#111;color:#0f0;padding:10px 15px;
-            border-radius:8px;border:1px solid #0f0;
+            position:fixed;top:70px;left:20px;z-index:10000;
+            background:rgba(17, 17, 17, 0.95);color:#0f0;padding:14px 18px;
+            border-radius:10px;border:1px solid #0f0;
             font-family:monospace;white-space:pre-wrap;
             max-height:70vh;overflow-y:auto;display:none;
+            box-shadow: 0 0 20px #0f05;
+            transition: all 0.3s ease-in-out;
         `;
         document.body.appendChild(keyUI);
 
         const toggleBtn = document.createElement("button");
         toggleBtn.textContent = "Show Keys";
         toggleBtn.style = `
-            position:fixed;top:20px;right:20px;z-index:99999;
+            position:fixed;top:20px;right:20px;z-index:10000;
             background:#111;color:#0f0;border:1px solid #0f0;
-            padding:8px 16px;border-radius:6px;font-size:16px;
-            cursor:pointer;
+            padding:10px 16px;border-radius:8px;font-size:16px;
+            cursor:pointer;transition:all 0.3s ease-in-out;
         `;
+        toggleBtn.onmouseover = () => toggleBtn.style.background = "#222";
+        toggleBtn.onmouseout = () => toggleBtn.style.background = "#111";
         document.body.appendChild(toggleBtn);
 
         const copyBtn = document.createElement("button");
         copyBtn.textContent = "Copy All Keys";
         copyBtn.style = `
-            position:fixed;top:70px;right:20px;z-index:99999;
+            position:fixed;top:70px;right:20px;z-index:10000;
             background:#111;color:#0f0;border:1px solid #0f0;
-            padding:6px 12px;border-radius:6px;font-size:14px;
-            cursor:pointer;display:none;
+            padding:8px 14px;border-radius:8px;font-size:14px;
+            cursor:pointer;display:none;transition:all 0.3s ease-in-out;
         `;
         document.body.appendChild(copyBtn);
 
         const clearBtn = document.createElement("button");
         clearBtn.textContent = "Clear All Keys";
         clearBtn.style = `
-            position:fixed;top:110px;right:20px;z-index:99999;
+            position:fixed;top:110px;right:20px;z-index:10000;
             background:#111;color:#0f0;border:1px solid #0f0;
-            padding:6px 12px;border-radius:6px;font-size:14px;
-            cursor:pointer;display:none;
+            padding:8px 14px;border-radius:8px;font-size:14px;
+            cursor:pointer;display:none;transition:all 0.3s ease-in-out;
         `;
         document.body.appendChild(clearBtn);
 
@@ -90,13 +100,13 @@ if (host.includes("work.ink")) {
                 .filter(k => k.startsWith("valex"));
 
             keyUI.textContent = keys.length
-                ? `Keys:\n\n${keys.map((k, i) => `${i + 1}: ${k}`).join("\n")}`
-                : "None Keys 😈";
+                ? `Stored Keys:\n\n${keys.map((k, i) => `${i + 1}: ${k}`).join("\n")}`
+                : "No keys found";
         };
 
         const copyKeysToClipboard = () => {
             if (keyUI.style.display === "none") return;
-            const text = keyUI.textContent.replace(/^\Keys.*\n\n/, '').replace(/\d+: /g, '');
+            const text = keyUI.textContent.replace(/^Stored Keys:\n\n/, '').replace(/\d+: /g, '');
             navigator.clipboard.writeText(text).then(() => {
                 copyBtn.textContent = "Copied!";
                 setTimeout(() => copyBtn.textContent = "Copy All Keys", 1500);
@@ -135,11 +145,11 @@ if (host.includes("work.ink")) {
             return false;
         };
 
-setInterval(() => {
-    if (!scanning) return;
-    deleteSaveLabels();
-    saveCode();
-}, 5);
+        setInterval(() => {
+            if (!scanning) return;
+            deleteSaveLabels();
+            saveCode();
+        }, 5);
 
         toggleBtn.onclick = () => {
             if (keyUI.style.display === "none") {
